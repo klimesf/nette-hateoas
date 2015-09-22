@@ -1,0 +1,27 @@
+{
+  "name": "klimesf/nette-hateoas",
+  "description": "Hateoas integration into Nette Framework.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Filip Klimes",
+      "email": "filip@filipklimes.cz"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">= 5.4",
+    "willdurand/hateoas": "^2.8",
+    "nette/di": "^2.3"
+  },
+  "autoload": {
+    "psr-0": {
+      "Klimesf\\Hateoas": "src/"
+    }
+  },
+  "require-dev": {
+    "nette/tester": "^1.5",
+    "tracy/tracy": "^2.3"
+  }
+}

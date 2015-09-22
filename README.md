@@ -1,2 +1,51 @@
-# nette-hateoas
-willdurand/Hateoas integration into Nette Framewokr.
+# Hateoas
+
+Hateoas integration into Nette Framework.
+
+For documentation, please refer to [Hateoas GitHub](https://github.com/willdurand/Hateoas)
+or to [Official Hateoas webpage](http://hateoas-php.org).
+
+Requirements
+============
+
+Hateoas requires
+
+- PHP 5.4 or higher
+- [Nette Framework](https://github.com/nette/nette)
+- [Hateoas](https://github.com/willdurand/Hateoas)
+
+Installation
+============
+
+Install Hateoas via Composer.
+
+```sh
+composer require klimesf/nette-hateoas
+```
+
+Configuration
+=============
+
+```yml
+extensions:
+	hateoas: Klimesf\Hateoas\DI\HateoasExtension
+	
+hateoas:
+	cacheDir: %tempDir%/cache/hateoas
+	debugMode: %debugMode%
+	jsonSerializer: App\My\JsonSerializer
+	xmlSerializer: App\My\XmlSerializer
+	urlGenerators:
+		- App\My\DefaultUrlGenerator
+		other: App\My\OtherUrlGenerator
+	expressionContextVariables:
+		foo: "value"
+		bar: "value"
+	expressionLanguage: App\My\ExpressionLanguage
+	expressionFunctions:
+		- App\My\ExpressionFunction
+		- App\My\OtherExpressionFunction
+	relationProviderResolvers:
+		- App\My\RelationProviderResolver
+		- App\My\OtherRelationProviderResolver
+```
