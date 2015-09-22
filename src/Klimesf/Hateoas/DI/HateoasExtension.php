@@ -4,6 +4,7 @@
 namespace Klimesf\Hateoas\DI;
 
 use Hateoas\Hateoas;
+use Klimesf\Hateoas\NetteUrlGenerator;
 use Nette\DI\CompilerExtension;
 
 /**
@@ -31,6 +32,10 @@ class HateoasExtension extends CompilerExtension
 	{
 		$config = $this->validateConfig($this->getConfig($this->defaults));
 		$container = $this->getContainerBuilder();
+
+		$container->addDefinition($this->prefix('netteUrlGenerator'))
+			->setClass(NetteUrlGenerator::class)
+			->setInject(false);
 
 		$container->addDefinition($this->prefix('hateoasBuilder'))
 			->setClass(HateoasBuilder::class, [$config])

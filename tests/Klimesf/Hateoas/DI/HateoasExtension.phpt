@@ -2,6 +2,7 @@
 
 use Hateoas\Hateoas;
 use Klimesf\Hateoas\DI\HateoasExtension;
+use Klimesf\Hateoas\NetteUrlGenerator;
 use Nette\DI;
 use Tester\Assert;
 
@@ -48,12 +49,28 @@ class MyXmlSerializer implements \Hateoas\Serializer\XmlSerializerInterface {
 	public function serializeEmbeddeds(array $embeddeds, \JMS\Serializer\XmlSerializationVisitor $visitor, \JMS\Serializer\SerializationContext $context) { throw new \LogicException("Method serializeEmbeddeds() not implemented."); }
 }
 
+class MyRouter implements \Nette\Application\IRouter {
+	function match(Nette\Http\IRequest $httpRequest) { throw new \LogicException("Method match() not implemented."); }
+	function constructUrl(\Nette\Application\Request $appRequest, Nette\Http\Url $refUrl) { throw new \LogicException("Method constructUrl() not implemented."); }
+}
+
 
 
 
 // No settings
 $compiler = new DI\Compiler;
 $compiler->addExtension('hateoas', new HateoasExtension());
+$compiler->addConfig([
+	'parameters' => [
+		'tempDir'   => TEMP_DIR,
+		'debugMode' => true,
+	],
+	'services'   => [
+		'router'        => MyRouter::class,
+		'linkGenerator' => \Nette\Application\LinkGenerator::class,
+		'url'           => \Nette\Http\Url::class,
+	],
+]);
 eval($compiler->compile([], 'Container1'));
 $container = new Container1();
 Assert::type(Hateoas::class, $container->getService('hateoas.hateoas'));
@@ -62,7 +79,16 @@ Assert::type(Hateoas::class, $container->getService('hateoas.hateoas'));
 $compiler = new DI\Compiler;
 $compiler->addExtension('hateoas', new HateoasExtension());
 $compiler->addConfig([
-	'hateoas' => [
+	'parameters' => [
+		'tempDir'   => TEMP_DIR,
+		'debugMode' => true,
+	],
+	'services'   => [
+		'router'        => MyRouter::class,
+		'linkGenerator' => \Nette\Application\LinkGenerator::class,
+		'url'           => \Nette\Http\Url::class,
+	],
+	'hateoas'    => [
 		'cacheDir'                   => TEMP_DIR . '/cache/hateoas',
 		'debugMode'                  => false,
 		'jsonSerializer'             => MyJsonSerializer::class,
@@ -90,3 +116,4 @@ eval($compiler->compile([], 'Container2'));
 $container = new Container2();
 
 Assert::type(Hateoas::class, $container->getService('hateoas.hateoas'));
+Assert::type(NetteUrlGenerator::class, $container->getService('hateoas.netteUrlGenerator'));

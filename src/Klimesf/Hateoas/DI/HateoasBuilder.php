@@ -4,6 +4,7 @@
 namespace Klimesf\Hateoas\DI;
 
 use Hateoas\HateoasBuilder as Builder;
+use Klimesf\Hateoas\NetteUrlGenerator;
 
 /**
  * Builds Hateoas service with given configuration.
@@ -19,12 +20,18 @@ class HateoasBuilder
 	private $config;
 
 	/**
+	 * @var NetteUrlGenerator
+	 */
+	private $netteUrlGenerator;
+
+	/**
 	 * HateoasBuilder constructor.
 	 * @param array $config
 	 */
-	public function __construct(array $config)
+	public function __construct(array $config, NetteUrlGenerator $netteUrlGenerator)
 	{
 		$this->config = $config;
+		$this->netteUrlGenerator = $netteUrlGenerator;
 	}
 
 	/**
@@ -38,10 +45,7 @@ class HateoasBuilder
 
 		$this->setJsonSerializer($hateoasBuilder);
 		$this->setXmlSerializer($hateoasBuilder);
-
-		if (!empty($this->config['urlGenerators'])) {
-			$this->addUrlGenerators($hateoasBuilder);
-		}
+		$this->addUrlGenerators($hateoasBuilder);
 
 		if (!empty($this->config['expressionContextVariables'])) {
 			$this->addExpressionContextVariables($hateoasBuilder);
@@ -69,8 +73,12 @@ class HateoasBuilder
 	 */
 	private function addUrlGenerators(Builder & $hateoasBuilder)
 	{
-		foreach ($this->config['urlGenerators'] as $name => $generator) {
-			$hateoasBuilder->setUrlGenerator($name, new $generator);
+		if (!empty($this->config['urlGenerators'])) {
+			foreach ($this->config['urlGenerators'] as $name => $generator) {
+				$hateoasBuilder->setUrlGenerator($name, new $generator);
+			}
+		} else {
+			$hateoasBuilder->setUrlGenerator(null, $this->netteUrlGenerator);
 		}
 	}
 
