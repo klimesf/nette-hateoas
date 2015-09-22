@@ -52,3 +52,25 @@ hateoas:
 		- App\My\RelationProviderResolver
 		- App\My\OtherRelationProviderResolver
 ```
+
+Usage
+=====
+
+Require `Hateoas\Hateoas` class and send the json.
+
+```php
+class MyPresenter extends Nette\Application\UI\Presenter
+{
+
+	/** @var Hateoas\Hateoas @inject */
+	public $hateoas;
+	
+	public function actionDefault()
+	{
+		$entity = // ...
+		$json = $this->hateoas->serialize($entity, 'json');
+		$this->sendResponse(new Klimesf\Hateoas\HalJsonResponse($json)); // Sends HAL JSON response
+	}
+
+}
+```
