@@ -1,5 +1,8 @@
 # Hateoas
 
+[![Build Status](https://travis-ci.org/klimesf/nette-hateoas.svg?branch=master)](https://travis-ci.org/klimesf/nette-hateoas)
+[![Latest stable](https://img.shields.io/packagist/v/klimesf/nette-hateoas.svg)](https://packagist.org/packages/klimesf/nette-hateoas)
+
 Hateoas integration into Nette Framework.
 
 For documentation, please refer to [Hateoas GitHub](https://github.com/willdurand/Hateoas)
