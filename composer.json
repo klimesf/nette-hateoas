@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Klimesf\\Hateoas": "src/"
+      "Klimesf\\Hateoas\\": "src/"
     }
   },
   "require-dev": {
