@@ -29,7 +29,7 @@ class HateoasExtension extends CompilerExtension
 
 	public function loadConfiguration()
 	{
-		$config = $this->validateConfig($this->defaults);
+		$config = $this->validateConfig($this->getConfig($this->defaults));
 		$container = $this->getContainerBuilder();
 
 		$container->addDefinition($this->prefix('hateoasBuilder'))
