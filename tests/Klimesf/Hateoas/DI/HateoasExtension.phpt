@@ -62,13 +62,9 @@ Assert::type(Hateoas::class, $container->getService('hateoas.hateoas'));
 $compiler = new DI\Compiler;
 $compiler->addExtension('hateoas', new HateoasExtension());
 $compiler->addConfig([
-	'parameters' => [
-		'tempDir' => TEMP_DIR,
-		'debugMode' => false,
-	],
 	'hateoas' => [
-		'cacheDir'                   => '%tempDir%/cache/hateoas',
-		'debugMode'                  => '%debugMode',
+		'cacheDir'                   => TEMP_DIR . '/cache/hateoas',
+		'debugMode'                  => false,
 		'jsonSerializer'             => MyJsonSerializer::class,
 		'xmlSerializer'              => MyXmlSerializer::class,
 		'urlGenerators'              => [
