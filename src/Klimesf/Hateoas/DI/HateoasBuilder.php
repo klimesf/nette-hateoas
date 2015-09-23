@@ -76,7 +76,12 @@ class HateoasBuilder
 	private function addUrlGenerators(Builder & $hateoasBuilder)
 	{
 		if (!empty($this->config['urlGenerators'])) {
+			$hasDefault = false;
 			foreach ($this->config['urlGenerators'] as $name => $generator) {
+				if (is_numeric($name) && !$hasDefault) {
+					$name = null;
+					$hasDefault = true;
+				}
 				$hateoasBuilder->setUrlGenerator($name, $this->container->getByType($generator));
 			}
 		}
