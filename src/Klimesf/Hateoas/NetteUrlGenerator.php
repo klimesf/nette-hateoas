@@ -35,11 +35,8 @@ class NetteUrlGenerator implements UrlGeneratorInterface
 	 * @param boolean $absolute
 	 * @return string
 	 */
-	public function generate($name, array $parameters, $absolute = false)
+	public function generate($name, array $parameters, $absolute = true)
 	{
-		if ($absolute) {
-			$name = '//' . $name;
-		}
 		return $this->linkGenerator->link($name, $parameters);
 	}
 
