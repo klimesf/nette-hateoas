@@ -30,7 +30,7 @@ class HateoasExtension extends CompilerExtension
 
 	public function loadConfiguration()
 	{
-		$config = $this->validateConfig($this->getConfig($this->defaults));
+		$config = $this->getConfig($this->defaults);
 		$container = $this->getContainerBuilder();
 
 		$container->addDefinition($this->prefix('netteUrlGenerator'))

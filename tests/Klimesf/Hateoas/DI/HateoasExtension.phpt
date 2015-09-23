@@ -69,11 +69,12 @@ $compiler->addConfig([
 		'router'        => MyRouter::class,
 		'linkGenerator' => \Nette\Application\LinkGenerator::class,
 		'url'           => \Nette\Http\Url::class,
-	],
+	]
 ]);
 eval($compiler->compile([], 'Container1'));
 $container = new Container1();
 Assert::type(Hateoas::class, $container->getService('hateoas.hateoas'));
+Assert::type(NetteUrlGenerator::class, $container->getService('hateoas.netteUrlGenerator'));
 
 // Extra settings
 $compiler = new DI\Compiler;
@@ -84,9 +85,11 @@ $compiler->addConfig([
 		'debugMode' => true,
 	],
 	'services'   => [
-		'router'        => MyRouter::class,
-		'linkGenerator' => \Nette\Application\LinkGenerator::class,
-		'url'           => \Nette\Http\Url::class,
+		'router'              => MyRouter::class,
+		'linkGenerator'       => \Nette\Application\LinkGenerator::class,
+		'url'                 => \Nette\Http\Url::class,
+		'myUrlGenerator'      => MyUrlGenerator::class,
+		'myOtherUrlGenerator' => MyOtherUrlGenerator::class,
 	],
 	'hateoas'    => [
 		'cacheDir'                   => TEMP_DIR . '/cache/hateoas',
@@ -95,7 +98,8 @@ $compiler->addConfig([
 		'xmlSerializer'              => MyXmlSerializer::class,
 		'urlGenerators'              => [
 			MyUrlGenerator::class,
-			"other" => MyOtherUrlGenerator::class
+			"other" => MyOtherUrlGenerator::class,
+			"nette" => NetteUrlGenerator::class,
 		],
 		'expressionContextVariables' => [
 			'foo' => 'value',

@@ -5,6 +5,7 @@ namespace Klimesf\Hateoas\DI;
 
 use Hateoas\HateoasBuilder as Builder;
 use Klimesf\Hateoas\NetteUrlGenerator;
+use Nette\DI\Container;
 
 /**
  * Builds Hateoas service with given configuration.
@@ -20,18 +21,19 @@ class HateoasBuilder
 	private $config;
 
 	/**
-	 * @var NetteUrlGenerator
+	 * @var Container
 	 */
-	private $netteUrlGenerator;
+	private $container;
 
 	/**
 	 * HateoasBuilder constructor.
-	 * @param array $config
+	 * @param array             $config
+	 * @param Container         $container
 	 */
-	public function __construct(array $config, NetteUrlGenerator $netteUrlGenerator)
+	public function __construct(array $config, Container $container)
 	{
 		$this->config = $config;
-		$this->netteUrlGenerator = $netteUrlGenerator;
+		$this->container = $container;
 	}
 
 	/**
@@ -75,10 +77,8 @@ class HateoasBuilder
 	{
 		if (!empty($this->config['urlGenerators'])) {
 			foreach ($this->config['urlGenerators'] as $name => $generator) {
-				$hateoasBuilder->setUrlGenerator($name, new $generator);
+				$hateoasBuilder->setUrlGenerator($name, $this->container->getByType($generator));
 			}
-		} else {
-			$hateoasBuilder->setUrlGenerator(null, $this->netteUrlGenerator);
 		}
 	}
 

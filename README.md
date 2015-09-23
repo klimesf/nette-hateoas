@@ -30,6 +30,10 @@ Configuration
 =============
 
 ```yml
+services:
+	myUrlGenerator: App\My\DefaultUrlGenerator
+	myOtherUrlGenerator: App\My\OtherUrlGenerator
+
 extensions:
 	hateoas: Klimesf\Hateoas\DI\HateoasExtension
 	
@@ -52,6 +56,8 @@ hateoas:
 		- App\My\RelationProviderResolver
 		- App\My\OtherRelationProviderResolver
 ```
+
+All the Url generators must be registered as services.
 
 Usage
 =====
